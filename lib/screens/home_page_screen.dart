@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/add_place_screen.dart';
+import '../providers/great_place_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,8 +21,33 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(
-        child: CircularProgressIndicator(),
+      body: Consumer<PlaceProvider>(
+        builder: (context, places, child) => places.items.isEmpty
+            ? child!
+            : ListView.builder(
+                itemCount: places.items.length,
+                itemBuilder: (context, index) => ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: FileImage(places.items[index].image),
+                  ),
+                  title: Text(places.items[index].title),
+                  onTap: () {
+                    // go to detail page ...
+                  },
+                ),
+              ),
+        child: Center(
+            child: Column(
+          children: <Widget>[
+            const Text("Got no places yet, start adding some!"),
+            const SizedBox(height: 10),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AddPlaceScreen.routeName);
+                },
+                child: const Text("Add Place"))
+          ],
+        )),
       ),
     );
   }
