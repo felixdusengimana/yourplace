@@ -45,18 +45,21 @@ class HomePage extends StatelessWidget {
                               },
                             ),
                           ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const Text("Got no places yet, start adding some!"),
-                        const SizedBox(height: 10),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushNamed(AddPlaceScreen.routeName);
-                            },
-                            child: const Text("Add Place"))
-                      ],
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          const Text("Got no places yet, start adding some!"),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(AddPlaceScreen.routeName);
+                              },
+                              child: const Text("Add Place"))
+                        ],
+                      ),
                     ),
                   ),
       ),
