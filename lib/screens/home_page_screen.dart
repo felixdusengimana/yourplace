@@ -21,33 +21,44 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Consumer<PlaceProvider>(
-        builder: (context, places, child) => places.items.isEmpty
-            ? child!
-            : ListView.builder(
-                itemCount: places.items.length,
-                itemBuilder: (context, index) => ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: FileImage(places.items[index].image),
+      body: FutureBuilder(
+        future: Provider.of<PlaceProvider>(context, listen: false)
+            .fetchAndSetPlaces(),
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Consumer<PlaceProvider>(
+                    builder: (context, places, child) => places.items.isEmpty
+                        ? child!
+                        : ListView.builder(
+                            itemCount: places.items.length,
+                            itemBuilder: (context, index) => ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage:
+                                    FileImage(places.items[index].image),
+                              ),
+                              title: Text(places.items[index].title),
+                              onTap: () {
+                                // go to detail page ...
+                              },
+                            ),
+                          ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text("Got no places yet, start adding some!"),
+                        const SizedBox(height: 10),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(AddPlaceScreen.routeName);
+                            },
+                            child: const Text("Add Place"))
+                      ],
+                    ),
                   ),
-                  title: Text(places.items[index].title),
-                  onTap: () {
-                    // go to detail page ...
-                  },
-                ),
-              ),
-        child: Center(
-            child: Column(
-          children: <Widget>[
-            const Text("Got no places yet, start adding some!"),
-            const SizedBox(height: 10),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(AddPlaceScreen.routeName);
-                },
-                child: const Text("Add Place"))
-          ],
-        )),
       ),
     );
   }
