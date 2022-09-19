@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yourplace/widgets/location_input.dart';
 import '../providers/great_place_provider.dart';
 import '../widgets/image_input.dart';
 
@@ -15,15 +16,13 @@ class AddPlaceScreen extends StatefulWidget {
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _titleController = TextEditingController();
   File? _pickedImage;
-  final _addressController = TextEditingController();
-  final _addressFocusNode = FocusNode();
 
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
 
   void _savePlace() {
-    if (_titleController.text.isEmpty || _addressController.text.isEmpty) {
+    if (_titleController.text.isEmpty) {
       return;
     }
     Provider.of<PlaceProvider>(context, listen: false).addPlace(
@@ -36,8 +35,6 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   @override
   void dispose() {
     _titleController.dispose();
-    _addressController.dispose();
-    _addressFocusNode.dispose();
     super.dispose();
   }
 
@@ -68,10 +65,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    TextField(
-                      decoration: const InputDecoration(labelText: "Address"),
-                      controller: _addressController,
-                    ),
+                    LocationInput(),
                   ],
                 ),
               ),
