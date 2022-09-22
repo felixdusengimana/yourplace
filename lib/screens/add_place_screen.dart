@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yourplace/models/place.dart';
+import 'package:yourplace/providers/great_places.dart';
 
-import '../models/place_model.dart';
 import '../widgets/location_input.dart';
-import '../providers/great_place_provider.dart';
 import '../widgets/image_input.dart';
 
 class AddPlaceScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
     if (_titleController.text.isEmpty) {
       return;
     }
-    Provider.of<PlaceProvider>(context, listen: false).addPlace(
+    Provider.of<GreatPlaces>(context, listen: false).addPlace(
       _titleController.text,
       _pickedImage!,
       _pickedLocation!,

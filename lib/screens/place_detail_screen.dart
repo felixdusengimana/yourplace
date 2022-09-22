@@ -9,7 +9,7 @@ class PlaceDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute.of(context).settings.arguments;
+    final id = ModalRoute.of(context)?.settings.arguments as String;
     final selectedPlace =
         Provider.of<GreatPlaces>(context, listen: false).findById(id);
     return Scaffold(
@@ -49,9 +49,9 @@ class PlaceDetailScreen extends StatelessWidget {
                 MaterialPageRoute(
                   fullscreenDialog: true,
                   builder: (ctx) => MapScreen(
-                        initialLocation: selectedPlace.location,
-                        isSelecting: false,
-                      ),
+                    initialLocation: selectedPlace.location,
+                    isSelecting: false,
+                  ),
                 ),
               );
             },
